@@ -49,7 +49,7 @@
 (defmacro local-bindings
   "Produces a map of the names of local bindings to their values."
   []
-  (let [symbols (map key @clojure.lang.Compiler/LOCAL_ENV)]
+  (let [symbols (keys &env)]
     (zipmap (map (fn [sym] `(quote ~sym)) symbols) symbols)))
 
 (declare *locals*)
