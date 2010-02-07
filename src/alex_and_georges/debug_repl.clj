@@ -91,7 +91,7 @@ values."
   (throw quit-dr-exception))
 
 (def exit-dr-exception
-     (Exception. ))
+     (Throwable. "Exiting back to main repl from debug-repl"))
 
 (defn exit-dr []
   (throw exit-dr-exception))
@@ -123,7 +123,7 @@ values."
                (eval-fn# new-form#)
                (eval-fn# ~form))
              (= e# exit-dr-exception)
-             (when (> level 0)
+             (when (> level -1)
                (throw exit-dr-exception))
              :else (throw e#)))))))
 
