@@ -54,7 +54,7 @@
   (let [symbols (keys &env)]
     (zipmap (map (fn [sym] `(quote ~sym)) symbols) symbols)))
 
-(declare *locals*)
+(declare ^:dynamic *locals*)
 
 (defn view-locals []
   *locals*)
@@ -75,7 +75,7 @@ values."
       request-exit
       input)))
 
-(def level 0)
+(def ^:dynamic level 0)
 (def counter (atom 1000))
 (defn inc-counter []
   (swap! counter inc))
@@ -90,7 +90,7 @@ values."
   (reset! element (first form))
   (throw quit-dr-exception))
 
-(def exit-dr-exception
+(def ^:dynamic  exit-dr-exception
      (Throwable. "Exiting back to main repl from debug-repl"))
 
 (defn exit-dr []
