@@ -105,7 +105,7 @@ values."
 (defmacro debug-repl
   "Starts a REPL with the local bindings available."
   ([]
-     '(debug-repl nil))
+     `(debug-repl nil))
   ([form]
      `(let [counter# (inc-counter)
             eval-fn# (partial eval-with-locals (local-bindings))]
