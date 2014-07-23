@@ -1,4 +1,4 @@
-The Clojure debug-repl 
+# The Clojure debug-repl
 
 Every time I stick a println into some Clojure code to debug it, I
 think to myself, "This is Lisp! I should be able to insert a repl
@@ -9,23 +9,49 @@ about the surrounding lexical scope.  How to solve the problem?
 Create a macro that passes a copy of the lexical scope in with the
 form to be evaled, something like this:
 
+```clojure
 (defn eval-with-locals
   [locals form]
     (eval
      `(let ~(generate-local-bindings locals)
         ~form)))
+```
 
-USE:
-The interface is meant to be dead simple:
-"(use 'alex-and-georges.debug-repl)" loads it, and "(debug-repl)" invokes it.
+## INSTALLATION
+
+Leiningen
+
+```clojure
+[debug-repl "0.3.2"]
+```
+
+Maven
+
+```xml
+<dependency>
+  <groupId>debug-repl</groupId>
+  <artifactId>debug-repl</artifactId>
+  <version>0.3.2</version>
+</dependency>
+```
+
+## USAGE
+
+The interface is meant to be dead simple. To load and then invoke the code run:
+
+```clojure
+(use 'alex-and-georges.debug-repl)
+(debug-repl)
+```
 
 That's about it.  When you enter the debug-repl, the regular
 repl prompt will be replaced with 
 
-dr =>
+    dr =>
 
 An example will make it clearer:
 
+```clojure
 user=>   (let [c 1 d 2]
     (defn a [b c]
       (debug-repl)
@@ -49,14 +75,14 @@ dr-1-1001 => (str b c)
 dr-1-1001 => ()
 2
 user=> 
+```
 
-LIMITATIONS:
+## LIMITATIONS
+
 The debug-repl doesn't currently integrate properly
 with the slime-repl, (I think because of how Slime manages IO
 redirection,) so you'll have to invoke it from a regular repl, or
 slime's *inferior lisp* buffer.
 
 A version of the debug-repl has been ported to slime.  More details
-here:
-http://hugoduncan.org/post/2010/swank_clojure_gets_a_break_with_the_local_environment.xhtml
-
+here: http://hugoduncan.org/post/2010/swank_clojure_gets_a_break_with_the_local_environment.xhtml
